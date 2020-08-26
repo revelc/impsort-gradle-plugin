@@ -12,7 +12,7 @@
   limitations under the License.
 -->
 
-[![mvn verify][ci_img]][ci_link] [![Maven Central][maven_img]][maven_link]
+[![build][ci_img]][ci_link] [![Maven Central][maven_img]][maven_link]
 
 # ImpSort Gradle Plugin
 
@@ -26,7 +26,7 @@ This plugin uses [Semantic Versioning 2.0.0][1] for its own versioning. Its
 public API is the names of the goals and configuration options.
 
 [1]: http://semver.org/spec/v2.0.0.html
-[ci_link]: https://github.com/revelc/impsort-gradle-plugin/actions
+[ci_link]: https://github.com/revelc/impsort-gradle-plugin/workflows/Build/badge.svg
 [ci_img]: https://github.com/revelc/impsort-gradle-plugin/workflows/mvn%20verify/badge.svg
 [maven_img]: https://maven-badges.herokuapp.com/maven-central/net.revelc.code/impsort-gradle-plugin/badge.svg
 [maven_link]: https://maven-badges.herokuapp.com/maven-central/net.revelc.code/impsort-gradle-plugin
