@@ -14,21 +14,44 @@
 package net.revelc.code.impsort
 
 import org.gradle.testkit.runner.GradleRunner
-import org.junit.Rule
-import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
 
-class ImpsortSpecification extends Specification {
-    @Rule
-    TemporaryFolder testProjectDir = new TemporaryFolder()
+import java.nio.file.Files
+import java.nio.file.Path
 
-    def newFile(String name, String content) {
-        testProjectDir.newFile(name) << content
+class ImpsortSpecification extends Specification {
+    static final String BUILD_SCRIPT_NAME = 'build.gradle'
+
+    Path testProjectDir
+    Path buildScript
+
+    def setup() {
+        testProjectDir = Files.createTempDirectory('impsort-')
+        buildScript = getOrCreateFile(testProjectDir, BUILD_SCRIPT_NAME)
     }
 
-    GradleRunner runner() {
-        return GradleRunner.create()
-            .withProjectDir(testProjectDir.root)
+    def cleanup() {
+        testProjectDir.deleteDir()
+    }
+
+    def runner(String gradleVersion = null) {
+        def runner = GradleRunner.create()
+            .withProjectDir(testProjectDir.toFile())
             .withPluginClasspath()
+
+        if (gradleVersion) {
+            runner.withGradleVersion(gradleVersion)
+        }
+
+        return runner
+    }
+
+    static def getOrCreateFile(Path root, String name) {
+        def file = root.resolve(name)
+        if (!Files.exists(file)) {
+            Files.createFile(file)
+        }
+
+        return file
     }
 }

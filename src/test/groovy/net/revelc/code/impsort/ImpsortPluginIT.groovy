@@ -15,33 +15,37 @@ package net.revelc.code.impsort
 
 
 import org.gradle.testkit.runner.TaskOutcome
+import spock.lang.Unroll
 
 class ImpsortPluginIT extends ImpsortSpecification {
 
-    def "can successfully load plugin"() {
+    @Unroll
+    def "can successfully load plugin with gradle v#gradleVersion"() {
         given:
-            newFile('build.gradle', """
+            buildScript << """
                 plugins {
                     id 'net.revelc.code.impsort'
                 }
-            """)
+            """
         when:
-            runner()
+            runner(gradleVersion)
                 .build()
         then:
             noExceptionThrown()
+        where:
+            gradleVersion << [ '6.6', '6.5' ]
     }
 
-    def "can successfully execute task"() {
+    def "can successfully execute task "() {
         given:
-            newFile('build.gradle', """
+            buildScript << """
                 plugins {
                     id 'net.revelc.code.impsort'
                 }
                 impsort {
                     groups = 'java.,javax.'
                 }
-            """)
+            """
         when:
             def result = runner()
                 .withArguments(ImpsortPlugin.TASK_ID)
