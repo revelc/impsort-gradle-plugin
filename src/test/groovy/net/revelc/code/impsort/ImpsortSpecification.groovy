@@ -36,6 +36,7 @@ class ImpsortSpecification extends Specification {
 
     def runner(String gradleVersion = null) {
         def runner = GradleRunner.create()
+            .forwardOutput()
             .withProjectDir(testProjectDir.toFile())
             .withPluginClasspath()
 
@@ -44,6 +45,13 @@ class ImpsortSpecification extends Specification {
         }
 
         return runner
+    }
+
+    def file(String filePath, String fileName) {
+        def path = testProjectDir.resolve(filePath)
+        def root = Files.createDirectories(path)
+
+        return getOrCreateFile(root, fileName)
     }
 
     static def getOrCreateFile(Path root, String name) {

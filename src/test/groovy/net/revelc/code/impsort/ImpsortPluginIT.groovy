@@ -13,7 +13,6 @@
  */
 package net.revelc.code.impsort
 
-
 import org.gradle.testkit.runner.TaskOutcome
 import spock.lang.Unroll
 
@@ -26,7 +25,7 @@ class ImpsortPluginIT extends ImpsortSpecification {
                 plugins {
                     id 'net.revelc.code.impsort'
                 }
-            """
+            """.stripIndent()
         when:
             runner(gradleVersion)
                 .build()
@@ -38,6 +37,13 @@ class ImpsortPluginIT extends ImpsortSpecification {
 
     def "can successfully execute task "() {
         given:
+            file('src/main/java/test', 'Test.java') << """
+                package test;
+                
+                class Test {
+                }
+            """.stripIndent()
+
             buildScript << """
                 plugins {
                     id 'net.revelc.code.impsort'
@@ -45,13 +51,13 @@ class ImpsortPluginIT extends ImpsortSpecification {
                 impsort {
                     groups = 'java.,javax.'
                 }
-            """
+            """.stripIndent()
         when:
             def result = runner()
                 .withArguments(ImpsortPlugin.TASK_ID)
                 .build()
         then:
-            result.output.contains('java.,javax.')
+            result.output.contains('Test.java')
             result.task(":$ImpsortPlugin.TASK_ID").outcome == TaskOutcome.SUCCESS
     }
 }
