@@ -15,21 +15,21 @@ package net.revelc.code.impsort
 
 import groovy.transform.ToString
 
+import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
 
 @ToString(ignoreNulls = true)
 class ImpsortPluginExtension {
-    String sourceEncoding = StandardCharsets.UTF_8.name()
+    Charset sourceEncoding = StandardCharsets.UTF_8
     String staticGroups = '*'
     String groups = '*'
     boolean staticAfter
-    File sourceDirectory
-    File testSourceDirectory
+    boolean joinStaticWithNonStatic
     File[] directories
-    String[] includes
-    String[] excludes
+    String[] includes = [ '**/*.java' ]
+    String[] excludes = [] as String[]
     boolean removeUnused
-    boolean treatSamePackageAsUnused
-    boolean breadthFirstComparator
+    boolean treatSamePackageAsUnused = true
+    boolean breadthFirstComparator = true
     LineEnding lineEnding = LineEnding.AUTO
 }

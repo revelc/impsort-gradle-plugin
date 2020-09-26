@@ -10,23 +10,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
-package net.revelc.code.impsort
+ */package net.revelc.code.impsort
 
-import org.gradle.api.Plugin
-import org.gradle.api.Project
-
-class ImpsortPlugin implements Plugin<Project> {
-    static final String EXTENSION_ID = 'impsort'
-    static final String TASK_ID = 'sort'
-    static final String TASK_GROUP = 'revelc'
-
-    @Override
-    void apply(Project project) {
-        project.extensions.create(EXTENSION_ID, ImpsortPluginExtension)
-        project.task(TASK_ID , type: ImpsortTask ) {
-            group       = TASK_GROUP
-            description = "$TASK_GROUP:$TASK_ID"
-        }
-    }
+class ImpsortException extends Exception {
 }
